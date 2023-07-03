@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 export const useProduct = () => {
   const [products, setProducts] = useState();
   const [classifiedProducts, setClassifiedProducts] = useState({});
-
+  const [isLoading, setIsLoading] = useState(false);
   const getAllProduct = () => {
     axios
       .get(`${import.meta.env.VITE_URL_prod}/item/getAll`)
       .then((response) => {
         console.log(response);
+        classifyProductsByCategory(response.data);
         setProducts(response.data);
       })
       .catch((error) => {
@@ -35,12 +36,6 @@ export const useProduct = () => {
   useEffect(() => {
     getAllProduct();
   }, []);
-
-  useEffect(() => {
-    if (products) {
-      classifyProductsByCategory(products);
-    }
-  }, [products]);
 
   return { getAllProduct, classifiedProducts, products };
 };

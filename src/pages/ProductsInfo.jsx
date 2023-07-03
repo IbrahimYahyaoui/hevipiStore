@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
 import { BagContext } from "../Contexts/bagContext";
+import { toast } from "react-hot-toast";
 
 const ProductInfo = () => {
   const { id } = useParams();
@@ -29,13 +30,36 @@ const ProductInfo = () => {
       ...prevSelectedOptions,
       [optionGroup]: option,
     }));
-    console.log(selectedOptions);
   };
 
   const handleAddToBag = () => {
-    // Implement your logic for adding the product to the bag
-    // console.log("Product added to bag:", product);
-    dispatch({ type: "ADD_PRODUCT", payload: product });
+    if (!isOptionsFilled()) {
+      toast.error("Please select all options");
+      return;
+    }
+
+    const productToAdd = {
+      ...product,
+      selectedOptions: selectedOptions,
+    };
+
+    dispatch({ type: "ADD_PRODUCT", payload: productToAdd });
+  };
+
+  const isOptionsFilled = () => {
+    if (product.option1 != "" && !selectedOptions.option1) {
+      return false;
+    }
+
+    if (product.option2 != "" && !selectedOptions.option2) {
+      return false;
+    }
+
+    if (product.option3 != "" && !selectedOptions.option3) {
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -69,12 +93,18 @@ const ProductInfo = () => {
               <h1 className="text-3xl my-5">{product.name}</h1>
               <div className="flex flex-col md:flex-row items-center md:justify-between">
                 <h2 className="text-4xl font-semibold">{product.price} DT</h2>
-                <button
-                  className="px-4 py-2 bg-black text-white rounded hover:scale-105 mt-4 md:mt-0"
-                  onClick={handleAddToBag}
-                >
-                  Add to Bag
-                </button>
+                {product.isAvailable ? (
+                  <button
+                    className="px-4 py-2 bg-black text-white rounded hover:scale-105 mt-4 md:mt-0"
+                    onClick={handleAddToBag}
+                  >
+                    Add to Bag
+                  </button>
+                ) : (
+                  <button className="px-4 py-2 bg-red-500 text-white rounded hover:scale-105 mt-4 md:mt-0">
+                    out of stock
+                  </button>
+                )}
               </div>
               <div className="mt-4">
                 {product.categories.map((category, index) => (
@@ -86,72 +116,78 @@ const ProductInfo = () => {
                   </span>
                 ))}
               </div>
-              {product.option1 && product.option1.length > 0 && (
-                <div className="mt-4">
-                  <strong>{product.option1[0]}:</strong>
-                  <ul className="pt-4">
-                    <li>
-                      {product.option1.slice(1).map((option, index) => (
-                        <button
-                          key={index}
-                          className={`px-2 py-1 ml-2 border ${
-                            selectedOptions.option1 === option
-                              ? "border-blue-500 text-blue-500"
-                              : "border-gray-200 text-gray-700"
-                          } rounded`}
-                          onClick={() => handleOptionClick("option1", option)}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </li>
-                  </ul>
-                </div>
-              )}
-              {product.option2 && product.option2.length > 0 && (
-                <div className="mt-4">
-                  <strong>{product.option2[0]}:</strong>
-                  <ul className="pt-4">
-                    <li>
-                      {product.option2.slice(1).map((option, index) => (
-                        <button
-                          key={index}
-                          className={`px-2 py-1 ml-2 border ${
-                            selectedOptions.option2 === option
-                              ? "border-blue-500 text-blue-500"
-                              : "border-gray-200 text-gray-700"
-                          } rounded`}
-                          onClick={() => handleOptionClick("option2", option)}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </li>
-                  </ul>
-                </div>
-              )}
-              {product.option3 && product.option3.length > 0 && (
-                <div className="my-4">
-                  <strong c>{product.option3[0]}:</strong>
-                  <ul className="pt-4">
-                    <li>
-                      {product.option3.slice(1).map((option, index) => (
-                        <button
-                          key={index}
-                          className={`px-2 py-1 ml-2 border ${
-                            selectedOptions.option3 === option
-                              ? "border-blue-500 text-blue-500"
-                              : "border-gray-200 text-gray-700"
-                          } rounded`}
-                          onClick={() => handleOptionClick("option3", option)}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </li>
-                  </ul>
-                </div>
-              )}
+              {product.option1 &&
+                product.option1 != "" &&
+                product.option1.length > 0 && (
+                  <div className="mt-4">
+                    <strong>{product.option1[0]}:</strong>
+                    <ul className="pt-4">
+                      <li>
+                        {product.option1.slice(1).map((option, index) => (
+                          <button
+                            key={index}
+                            className={`px-2 py-1 ml-2 border ${
+                              selectedOptions.option1 === option
+                                ? "border-blue-500 text-blue-500"
+                                : "border-gray-200 text-gray-700"
+                            } rounded`}
+                            onClick={() => handleOptionClick("option1", option)}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              {product.option2 &&
+                product.option2 != "" &&
+                product.option2.length > 0 && (
+                  <div className="mt-4">
+                    <strong>{product.option2[0]}:</strong>
+                    <ul className="pt-4">
+                      <li>
+                        {product.option2.slice(1).map((option, index) => (
+                          <button
+                            key={index}
+                            className={`px-2 py-1 ml-2 border ${
+                              selectedOptions.option2 === option
+                                ? "border-blue-500 text-blue-500"
+                                : "border-gray-200 text-gray-700"
+                            } rounded`}
+                            onClick={() => handleOptionClick("option2", option)}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              {product.option3 &&
+                product.option3 != "" &&
+                product.option3.length > 0 && (
+                  <div className="my-4">
+                    <strong c>{product.option3[0]}:</strong>
+                    <ul className="pt-4">
+                      <li>
+                        {product.option3.slice(1).map((option, index) => (
+                          <button
+                            key={index}
+                            className={`px-2 py-1 ml-2 border ${
+                              selectedOptions.option3 === option
+                                ? "border-blue-500 text-blue-500"
+                                : "border-gray-200 text-gray-700"
+                            } rounded`}
+                            onClick={() => handleOptionClick("option3", option)}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </li>
+                    </ul>
+                  </div>
+                )}
 
               <div>
                 <p className="text-xl my-4">Description :</p>
@@ -161,7 +197,9 @@ const ProductInfo = () => {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className="w-full text-center">
+          <span className="loading loading-spinner loading-md absolute pt-20 text-center"></span>
+        </div>
       )}
     </div>
   );

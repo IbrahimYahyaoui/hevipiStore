@@ -1,118 +1,153 @@
-import React, { useContext, useEffect } from "react";
-import logo from "../assets/logo.png";
-import { ShoppingBagIcon } from "@heroicons/react/24/solid";
+import React, { useState, useContext } from "react";
+import {
+  Bars3Icon,
+  ShoppingBagIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/20/solid";
 import { useCategories } from "../hooks/useCategories";
 
 import { Link } from "react-router-dom";
 import { BagContext } from "../Contexts/bagContext";
+import logo from "../assets/logo.png";
+import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+import { Disclosure, Transition } from "@headlessui/react";
 
 const Navbar = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { categories, getAllCategories } = useCategories();
   const { items } = useContext(BagContext);
+  const handleDrawerToggle = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   return (
-    <div className="z-50">
-      <div className="drawer ">
-        <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col">
-          {/* Navbar */}
-          <div className="w-full navbar  flex justify-between items-center border-b-2">
-            <div className=" lg:hidden">
-              <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="inline-block w-6 h-6 stroke-current"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  ></path>
-                </svg>
-              </label>
-            </div>
-            <div className=" px-2 mx-2">
-              <img src={logo} alt="hevipi" className="h-8 ml-5"></img>
-            </div>
-            <div className="flex-none hidden lg:block">
-              <ul className="menu menu-horizontal">
-                {/* Navbar menu content here */}
-                <li>
-                  <a>Home</a>
-                </li>
-                <li>
-                  <details>
-                    <summary>Collection</summary>
-                    <ul className="p-2 bg-base-100">
-                      {categories &&
-                        categories.map((cat) => {
-                          return (
-                            <li key={cat._id}>
-                              <Link to={`/collections/${cat.name}`}>
-                                {cat.name}
-                              </Link>
-                            </li>
-                          );
-                        })}
-                    </ul>
-                  </details>
-                </li>
-                <li>
-                  <a>Contact</a>
-                </li>
-              </ul>
-            </div>
-            <Link
-              to="/bag"
-              className=" border-2 border-black rounded-md   py-2 px-4 cursor-pointer "
+    <nav className="flex items-center justify-between lg:justify-between p-4 border-b-2 Z-TOP">
+      <div className="flex md:hidden items-center">
+        <button
+          className="text-gray-500 hover:text-gray-700 focus:outline-none"
+          onClick={handleDrawerToggle}
+        >
+          <Bars3Icon className="w-6 h-6" />
+        </button>
+      </div>
+      <Link to="/" className="flex items-center">
+        <img src={logo} alt="Logo" className="w-8 h-8" />
+      </Link>
+      <ul className="p-4 lg:flex hidden ">
+        <li>
+          <Link to="/" href="#">
+            Home
+          </Link>
+        </li>
+        <div className="flex mx-3">
+          <div className="relative">
+            <Menu
+              menuButton={
+                <MenuButton className="flex align items-center">
+                  Collections <ChevronDownIcon className="w-4" />
+                </MenuButton>
+              }
             >
-              <ShoppingBagIcon className="h-4 mr-2" />
-              <p>
-                {" "}
-                {items &&
-                  items.reduce(
-                    (acc, item) => acc + item.price * item.qty,
-                    0
-                  )}{" "}
-                DT
-              </p>
-            </Link>
+              {categories &&
+                categories.map((cat) => {
+                  return (
+                    <Link to={`/collections/${cat.name}`}>
+                      <MenuItem key={cat._id}>
+                        <p>{cat.name}</p>
+                      </MenuItem>
+                    </Link>
+                  );
+                })}
+            </Menu>
           </div>
         </div>
-        <div className="drawer-side">
-          <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 h-full bg-base-200">
-            {/* Sidebar content here */}
-            <li>
-              <a>Sidebar Item 1</a>
-            </li>
-            <li>
-              <details>
-                <summary>collections</summary>
-                <ul className=" p-2 bg-base-100">
-                  {categories &&
-                    categories.map((cat) => {
-                      return (
-                        <li key={cat._id}>
-                          <Link to={`/collections/${cat.name}`}>
-                            {cat.name}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                </ul>
-              </details>
-            </li>
-            <li className="">
-              <a>contact</a>
-            </li>
-          </ul>
+        <li>
+          <Link to="/contact" href="#">
+            Contact
+          </Link>
+        </li>
+      </ul>
+      <Link
+        to="/bag"
+        className="items-center space-x-4 border-black border-2 flex p-2 border-opacity-30 rounded"
+      >
+        <ShoppingBagIcon className="w-6 h-6 text-gray-500 hover:text-gray-700 " />
+        <p>
+          {" "}
+          {items &&
+            items.reduce((acc, item) => acc + item.price * item.qty, 0)}{" "}
+          DT
+        </p>
+      </Link>
+      {/*  */}
+      {isDrawerOpen && (
+        <div className="fixed inset-0 flex">
+          <div className=" top-0 left-0 w-64 h-screen bg-white">
+            <ul className="p-4">
+              <li>
+                <Link to="/" href="#" onClick={handleDrawerToggle}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Disclosure>
+                  {({ open }) => (
+                    <>
+                      <Disclosure.Button className="flex items-center">
+                        Collections
+                        <ChevronRightIcon
+                          className={
+                            open ? "rotate-90 transform w-4 ml-2" : "w-4 ml-2"
+                          }
+                        />
+                      </Disclosure.Button>
+
+                      <Transition
+                        show={open}
+                        enter="transition duration-100 ease-out"
+                        enterFrom="transform scale-95 opacity-0"
+                        enterTo="transform scale-100 opacity-100"
+                        leave="transition duration-75 ease-out"
+                        leaveFrom="transform scale-100 opacity-100"
+                        leaveTo="transform scale-95 opacity-0"
+                      >
+                        <Disclosure.Panel static className="p-4">
+                          {categories &&
+                            categories.map((cat) => {
+                              return (
+                                <Link
+                                  key={cat._id}
+                                  to={`/collections/${cat.name}`}
+                                  onClick={handleDrawerToggle}
+                                  className="py-4"
+                                >
+                                  <p>{cat.name}</p>
+                                </Link>
+                              );
+                            })}
+                        </Disclosure.Panel>
+                      </Transition>
+                    </>
+                  )}
+                </Disclosure>
+              </li>
+              <li>
+                <Link to="/contact" href="#" onClick={handleDrawerToggle}>
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div
+            className="bg-black opacity-50 h-screen w-1/2 right-0"
+            onClick={handleDrawerToggle}
+          ></div>
         </div>
-      </div>
-    </div>
+      )}
+    </nav>
   );
 };
 

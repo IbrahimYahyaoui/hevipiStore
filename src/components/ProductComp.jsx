@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { BagContext } from "../Contexts/bagContext";
+
 const ProductComp = ({ product }) => {
   const { name, images, price, categories, isAvailable, _id } = product;
   const { dispatch } = useContext(BagContext);
   const handleAddToBag = () => {
-    // Add logic to handle adding the product to the shopping bag
     console.log("Product added to bag:", product);
     dispatch({ type: "ADD_TO_BAG", payload: product });
   };
@@ -14,16 +14,15 @@ const ProductComp = ({ product }) => {
   return (
     <Link
       to={`/info/${_id}`}
-      className="max-w-md rounded overflow-hidden border-2 p-2"
+      className="max-w-md rounded overflow-hidden border-2 p-2 flex flex-col"
     >
-      <div className="relative">
-        <img src={images[0]} alt={name} className="w-full  object-cover z-10" />
-        {!isAvailable && (
-          <div className="absolute top-0 right-0 mt-2 mr-2 bg-red-500 text-white px-2 py-1 rounded">
-            Sold Out
-          </div>
-        )}
-      </div>
+      <img src={images[0]} alt={name} className="w-full object-cover" />
+      {!isAvailable && (
+        <div className=" w-full text-center  bg-red-500 text-white px-2 py-1 rounded mt-2  self-end">
+          Sold Out
+        </div>
+      )}
+
       <div className="p-4">
         <div className="font-bold text-xl mb-2">{name}</div>
         <p className="text-gray-700 text-xl font-semibold text-right">
@@ -39,7 +38,7 @@ const ProductComp = ({ product }) => {
             </span>
           ))}
         </div>
-        <button
+        {/* <button
           disabled={!isAvailable}
           className={`mt-4 ${
             !isAvailable
@@ -49,7 +48,7 @@ const ProductComp = ({ product }) => {
           onClick={handleAddToBag}
         >
           Add to Bag
-        </button>
+        </button> */}
       </div>
     </Link>
   );

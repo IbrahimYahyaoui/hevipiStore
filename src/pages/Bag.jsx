@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { BagContext } from "../Contexts/bagContext";
+import { Link } from "react-router-dom";
 
 const Bag = () => {
   const { items, dispatch } = useContext(BagContext);
@@ -17,11 +18,11 @@ const Bag = () => {
   };
 
   return (
-    <div className="p-3">
+    <div className="">
       {items.map((item) => (
         <div
           key={item._id}
-          className="flex flex-wrap items-center border-2 rounded-md mb-4 p-2"
+          className="flex flex-wrap items-center border-2 rounded-md mb-4 m-3"
         >
           <img
             src={item.images[item.selectedImageIndex]}
@@ -59,16 +60,20 @@ const Bag = () => {
           </div>
         </div>
       ))}
-      <div>
+
+      <div className="pt-20   flex justify-end w-full border  bg-black fixed bottom-0">
         {items.length > 0 && (
-          <div className="checkout fixed bottom-0 flex items-center  right-0 p-3">
-            <p className="text-lg lg:text-2xl">
+          <div className="checkout fixed bottom-0 flex items-center  right-0 p-3   ">
+            <p className="text-lg lg:text-2xl text-white">
               Total Price:{" "}
               {items.reduce((acc, item) => acc + item.price * item.qty, 0)} DT
             </p>
-            <button className="bg-black text-white p-2 rounded ml-2 ">
+            <Link
+              to="/Checkout"
+              className="bg-white text-black p-2 rounded ml-2 "
+            >
               Proceed to Checkout
-            </button>
+            </Link>
           </div>
         )}
       </div>

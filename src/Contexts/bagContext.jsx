@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useReducer } from "react";
+import { toast } from "react-hot-toast";
 
 export const BagContext = createContext();
 
@@ -6,7 +7,8 @@ const bagReducer = (state, action) => {
   switch (action.type) {
     case "ADD_PRODUCT":
       // Check if the product is already in the bag
-      console.log(action.payload);
+      toast.dismiss();
+      toast.success("Added to bag");
       let exist = false;
       state.items.map((item, i) => {
         if (item._id === action.payload._id) {
@@ -73,9 +75,9 @@ export const BagContextProvider = ({ children }) => {
   useEffect(() => {
     //  calculate total price of products in bag
 
+    console.log("bag : ", state);
     localStorage.setItem("bag", JSON.stringify(state.items));
   }, [state.items]);
-  console.log(state);
   return (
     <BagContext.Provider value={{ ...state, dispatch }}>
       {children}
