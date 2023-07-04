@@ -1,9 +1,13 @@
 import React from "react";
 import ig from "../assets/ig.png";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
+import { Helmet } from "react-helmet";
 const Contact = () => {
   return (
     <div className=" pt-20 lg:w-96  m-auto flex flex-col justify-center">
+      <Helmet>
+        <link rel="canonical" href="https://hevipi.com/contact" />
+      </Helmet>
       <p className="text-center">
         Thank you for visiting our website! We value your feedback, inquiries,
         and suggestions. If you have any questions, need assistance, or would
