@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { BagContext } from "../Contexts/bagContext";
 import { toast } from "react-hot-toast";
-
+import { useBag } from "../hooks/UseBag";
 const Checkout = () => {
+  const { sendBagToConfirmation } = useBag();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
@@ -24,25 +25,15 @@ const Checkout = () => {
     if (name === "" || phone === "") {
       toast.error("Please fill in the required fields.");
     } else {
-      // Logic to send the order details
-      // You can access the name, phone, and description values here
-      // and also the bagContents array
-
-      // Example code to print the order details to the console
-      console.log("Name:", name);
-      console.log("Phone:", phone);
-      console.log("Description:", description);
-      console.log("Bag Contents:", items);
-
-      toast.success("Order sent successfully!");
+      sendBagToConfirmation(items);
     }
   };
 
   return (
-    <div className="">
-      <div className="m-3 mb-28">
+    <div className="mb-28">
+      <div className="m-3 ">
         <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-        <div className="mb-28 m-3  ">
+        <div className="   ">
           <label htmlFor="name" className="block font-semibold mb-2">
             Name:*
           </label>
