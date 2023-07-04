@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { useBag } from "../hooks/UseBag";
 const Checkout = () => {
   const { sendBagToConfirmation } = useBag();
-  const [name, setName] = useState("");
+  const [Username, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
   const { items } = useContext(BagContext);
@@ -22,10 +22,10 @@ const Checkout = () => {
   };
 
   const handleCheckout = () => {
-    if (name === "" || phone === "") {
+    if (Username === "" || phone === "") {
       toast.error("Please fill in the required fields.");
     } else {
-      sendBagToConfirmation(items);
+      sendBagToConfirmation(items, Username, phone, description);
     }
   };
 
@@ -40,7 +40,7 @@ const Checkout = () => {
           <input
             type="text"
             id="name"
-            value={name}
+            value={Username}
             onChange={handleNameChange}
             required
             className="w-full border border-gray-300 rounded-md px-3 py-2"

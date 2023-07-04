@@ -1,13 +1,19 @@
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export const useBag = () => {
-  const sendBagToConfirmation = (items) => {
+  const sendBagToConfirmation = (items, Username, phone, description) => {
     const orderDetails = items.map((item) => {
-      const { name, qty, selectedOptions } = item;
+      console.log(item);
+      const { name, qty, selectedOptions, images } = item;
       return {
         name,
         quantity: qty,
         options: selectedOptions,
+        image: images[0],
+        Username,
+        phone,
+        description,
       };
     });
 
@@ -22,16 +28,12 @@ export const useBag = () => {
     console.log(orderDetails);
     // Send the orderDetails to the server using a POST request
     axios
-      .post(`${import.meta.env.VITE_URL_prod}/item/AddOrder`, orderDetails)
+      .post(`${import.meta.env.VITE_URL_prod}/item/AddOrder`, {
+        orderDetails: JSON.stringify(orderDetails),
+      })
       .then((response) => {
         // Check the response status
-        if (response.status === 201) {
-          // Order sent successfully
-          toast.success("Order sent successfully!");
-        } else {
-          // Failed to send the order
-          toast.error("Failed to send the order. Please try again.");
-        }
+        toast.success("Order sent successfully!");
       })
       .catch((error) => {
         // Error occurred while sending the order
