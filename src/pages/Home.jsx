@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="rounded-lg overflow-hidden p-5 lg:px-20 pt-2">
-        <img src={bg} alt="bg" className="" />
+        <img src={bg} alt="bg" />
       </div>
       <h1 className="text-2xl font-bold my-4">Our Collection</h1>
       {isLoading ? (
