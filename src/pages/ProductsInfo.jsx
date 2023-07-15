@@ -90,7 +90,7 @@ const ProductInfo = () => {
               </div>
             </div>
             <div className="md:col-span-2">
-              <h1 className="text-3xl my-5">{product.name}</h1>
+              <h1 className="text-2xl my-5">{product.name}</h1>
               <div className="flex flex-col md:flex-row items-center md:justify-between">
                 <h2 className="text-4xl font-semibold">{product.price} DT</h2>
                 {product.isAvailable ? (

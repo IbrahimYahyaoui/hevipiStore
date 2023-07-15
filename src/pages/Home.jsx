@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <div className="m-6">
-      <h1 className="text-3xl text-center w-full mb-2">our Collection</h1>
+      {/* <h1 className="text-3xl text-center w-full mb-2">our Collection</h1> */}
       {isLoading ? (
         <div className="grid place-content-center pt-52">
           <span className="loading loading-spinner loading-md">a</span>

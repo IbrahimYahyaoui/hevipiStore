@@ -10,7 +10,7 @@ const ProductComp = ({ product }) => {
   return (
     <Link
       to={`/info/${_id}`}
-      className="max-w-md rounded overflow-hidden border-2 p-2 flex flex-col"
+      className="max-w-md rounded overflow-hidden border-2 p-1 flex flex-col"
     >
       <img src={images[0]} alt={name} className="w-full object-cover" />
       {!isAvailable && (
@@ -20,7 +20,7 @@ const ProductComp = ({ product }) => {
       )}
 
       <div className="p-4 flex flex-col justify-between">
-        <div className="font-bold text-lg mb-2 flex-1 ">{name}</div>
+        <div className="font-bold text-sm mb-2 flex-1 ">{name}</div>
         <div className="">
           <p className="text-gray-700 text-xl font-semibold text-right">
             {price} DT
