@@ -44,7 +44,7 @@ const Navbar = () => {
         </li>
         <div className="flex mx-3">
           <div className="relative">
-            <Menu
+            {/* <Menu
               menuButton={
                 <MenuButton className="flex align items-center">
                   Collections <ChevronDownIcon className="w-4" />
@@ -61,7 +61,7 @@ const Navbar = () => {
                     </Link>
                   );
                 })}
-            </Menu>
+            </Menu> */}
           </div>
         </div>
         <li>
@@ -92,7 +92,7 @@ const Navbar = () => {
                   Home
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Disclosure>
                   {({ open }) => (
                     <>
@@ -133,7 +133,7 @@ const Navbar = () => {
                     </>
                   )}
                 </Disclosure>
-              </li>
+              </li> */}
               <li>
                 <Link to="/contact" href="#" onClick={handleDrawerToggle}>
                   Contact

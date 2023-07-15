@@ -6,15 +6,18 @@ export const useProduct = () => {
   const [classifiedProducts, setClassifiedProducts] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const getAllProduct = () => {
+    setIsLoading(true);
     axios
       .get(`${import.meta.env.VITE_URL_prod}/item/getAll`)
       .then((response) => {
         console.log(response);
         classifyProductsByCategory(response.data);
         setProducts(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false);
       });
   };
 
@@ -37,5 +40,5 @@ export const useProduct = () => {
     getAllProduct();
   }, []);
 
-  return { getAllProduct, classifiedProducts, products };
+  return { getAllProduct, classifiedProducts, products, isLoading };
 };
