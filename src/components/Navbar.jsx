@@ -84,7 +84,7 @@ const Navbar = () => {
       </Link>
       {/*  */}
       {isDrawerOpen && (
-        <div className="fixed inset-0 flex">
+        <div className="fixed inset-0 flex z-50">
           <div className=" top-0 left-0 w-64 h-screen bg-white">
             <ul className="p-4">
               <li>

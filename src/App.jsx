@@ -14,6 +14,7 @@ import Bag from "./pages/Bag";
 import Contact from "./pages/Contact";
 import { Toaster } from "react-hot-toast";
 import Checkout from "./pages/Checkout";
+import Footer from "./components/footer";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayouts />}>

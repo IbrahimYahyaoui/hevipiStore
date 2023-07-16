@@ -2,11 +2,13 @@ import React, { useContext, useState } from "react";
 import { BagContext } from "../Contexts/bagContext";
 import { toast } from "react-hot-toast";
 import { useBag } from "../hooks/UseBag";
+
 const Checkout = () => {
-  const { sendBagToConfirmation } = useBag();
+  const { sendBagToConfirmation, isLoading } = useBag();
   const [Username, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
+  const [address, setAddress] = useState(""); // Address state
   const { items } = useContext(BagContext);
 
   const handleNameChange = (e) => {
@@ -21,19 +23,24 @@ const Checkout = () => {
     setDescription(e.target.value);
   };
 
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+  };
+
   const handleCheckout = () => {
-    if (Username === "" || phone === "") {
+    if (Username === "" || phone === "" || address === "") {
+      // Check for address as well
       toast.error("Please fill in the required fields.");
     } else {
-      sendBagToConfirmation(items, Username, phone, description);
+      sendBagToConfirmation(items, Username, phone, description, address); // Include address
     }
   };
 
   return (
     <div className="mb-28">
-      <div className="m-3 ">
+      <div className="m-3">
         <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-        <div className="   ">
+        <div className="mb-4">
           <label htmlFor="name" className="block font-semibold mb-2">
             Name:*
           </label>
@@ -55,6 +62,19 @@ const Checkout = () => {
             id="phone"
             value={phone}
             onChange={handlePhoneChange}
+            required
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="address" className="block font-semibold mb-2">
+            Address:*
+          </label>
+          <input
+            type="text"
+            id="address"
+            value={address}
+            onChange={handleAddressChange}
             required
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
@@ -87,19 +107,30 @@ const Checkout = () => {
           </div>
         ))}
       </div>
-      <div className="pt-20   flex justify-end bg-black w-full fixed bottom-0">
+      <div className="pt-20 flex justify-end bg-black w-full fixed bottom-0">
         {items.length > 0 && (
-          <div className="checkout fixed bottom-0 flex items-center  right-0 p-3  ">
+          <div className="checkout fixed bottom-0 flex items-center  right-0 p-3">
             <p className="text-lg lg:text-2xl text-white">
               Total Price:{" "}
               {items.reduce((acc, item) => acc + item.price * item.qty, 0)} DT
             </p>
-            <button
-              onClick={handleCheckout}
-              className="bg-white text-black p-2 rounded ml-2 w-50"
-            >
-              send to Confirmation
-            </button>
+            {!isLoading ? (
+              <button
+                onClick={handleCheckout}
+                className="bg-white text-black p-2 rounded ml-2 w-50"
+              >
+                send to Confirmation
+              </button>
+            ) : (
+              <button
+                className="bg-white text-black pl-28 py-2 rounded ml-2 w-50 
+              flex  justify-center
+              "
+              >
+                {/* tailwind spinner */}
+                loading..
+              </button>
+            )}
           </div>
         )}
       </div>

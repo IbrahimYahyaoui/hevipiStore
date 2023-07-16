@@ -10,7 +10,10 @@ const Bag = () => {
   };
 
   const handleDecreaseQty = (itemId) => {
-    dispatch({ type: "DECREASE_QTY", payload: itemId });
+    const item = items.find((item) => item._id === itemId);
+    if (item.qty > 1) {
+      dispatch({ type: "DECREASE_QTY", payload: itemId });
+    }
   };
 
   const handleRemoveProduct = (itemId) => {
@@ -45,7 +48,7 @@ const Bag = () => {
               </button>
               <p className="mr-2"> {item.qty}</p>
               <button
-                className=" border-l-2 border-black px-2 mx-1"
+                className="border-l-2 border-black px-2 mx-1"
                 onClick={() => handleIncreaseQty(item._id)}
               >
                 +
@@ -60,17 +63,16 @@ const Bag = () => {
           </div>
         </div>
       ))}
-
-      <div className="pt-20   flex justify-end w-full border  bg-black fixed bottom-0">
+      <div className="pt-20 flex justify-end w-full border bg-black fixed bottom-0">
         {items.length > 0 && (
-          <div className="checkout fixed bottom-0 flex items-center  right-0 p-3   ">
+          <div className="checkout fixed bottom-0 flex items-center right-0 p-3">
             <p className="text-lg lg:text-2xl text-white">
               Total Price:{" "}
               {items.reduce((acc, item) => acc + item.price * item.qty, 0)} DT
             </p>
             <Link
               to="/Checkout"
-              className="bg-white text-black p-2 rounded ml-2 "
+              className="bg-white text-black p-2 rounded ml-2"
             >
               Proceed to Checkout
             </Link>
