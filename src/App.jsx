@@ -14,7 +14,8 @@ import Bag from "./pages/Bag";
 import Contact from "./pages/Contact";
 import { Toaster } from "react-hot-toast";
 import Checkout from "./pages/Checkout";
-import Footer from "./components/footer";
+
+import { Analytics } from "@vercel/analytics/react";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayouts />}>
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
 function App() {
   return (
     <>
+      <Analytics />
       <Toaster />
       <p className="">
         <RouterProvider router={router} />

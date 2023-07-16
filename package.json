@@ -13,6 +13,7 @@
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
     "@szhsin/react-menu": "^4.0.0",
+    "@vercel/analytics": "^1.0.1",
     "axios": "^1.4.0",
     "headlessui": "^0.0.0",
     "react": "^18.2.0",
