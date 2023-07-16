@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
 import { BagContext } from "../Contexts/bagContext";
 import { toast } from "react-hot-toast";
-import Footer from "../components/footer";
+import Footer from "./Footer";
 
 const ProductInfo = () => {
   const { id } = useParams();

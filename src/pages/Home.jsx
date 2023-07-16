@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import bg from "../assets/bg.png";
-import { useCategories } from "../hooks/useCategories";
-import { Link } from "react-router-dom";
+
 import { useProduct } from "../hooks/useProduct";
 import ProductComp from "../components/ProductComp";
-import Footer from "../components/footer";
+import Footer from "./Footer";
 
 const Home = () => {
   const { products, isLoading } = useProduct();
