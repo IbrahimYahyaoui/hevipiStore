@@ -19,13 +19,16 @@ import { Analytics } from "@vercel/analytics/react";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayouts />}>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/info/:id" element={<ProductInfo />}></Route>
-      <Route path="/collections/:id" element={<Collection />}></Route>
-      <Route path="/bag" element={<Bag />}></Route>
-      <Route path="/Checkout" element={<Checkout />}></Route>
-      <Route path="/contact" element={<Contact />}></Route>
+      <Route path="/*" element={<p>404</p>}></Route>
     </Route>
+    // <Route path="/" element={<RootLayouts />}>
+    //   <Route path="/" element={<Home />}></Route>
+    //   <Route path="/info/:id" element={<ProductInfo />}></Route>
+    //   <Route path="/collections/:id" element={<Collection />}></Route>
+    //   <Route path="/bag" element={<Bag />}></Route>
+    //   <Route path="/Checkout" element={<Checkout />}></Route>
+    //   <Route path="/contact" element={<Contact />}></Route>
+    // </Route>
   )
 );
 function App() {
