@@ -19,19 +19,19 @@ const ProductComp = ({ product }) => {
         </div>
       )}
 
-      <div className="p-4 flex flex-col items-center  justify-between h-full">
-        <div className="font-bold text-xs mb-4 flex-1  whitespace-nowrap ">
+      <div className="p-2  flex flex-col items-center  w-full justify-between h-full ">
+        <div className="font-bold text-xs mb-4 flex-1  text-center uppercase resize-both ">
           {name}
         </div>
-        <div className="flex w-full items-center justify-between">
-          <p className="text-gray-700 text-xl font-semibold text-right w-1/2 ">
+        <div className="flex w-full items-center justify-between ">
+          <p className="text-gray-700 text-base font-semibold text-right w-1/3 items-start ">
             {price} DT
           </p>
           <div className="">
             {categories.map((category, index) => (
               <span
                 key={index}
-                className="inline-block bg-gray-200 text-gray-700 text-sm px-2 py-1 rounded-full "
+                className="inline-block bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full text-center "
               >
                 {category}
               </span>

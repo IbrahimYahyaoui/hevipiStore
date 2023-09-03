@@ -6,9 +6,9 @@ import SoonPage from "../pages/SoonPage";
 const RootLayouts = () => {
   return (
     <div>
-      {/* <Navbar />
-      <Outlet /> */}
-      <SoonPage />
+      <Navbar />
+      <Outlet />
+      {/* <SoonPage /> */}
     </div>
   );
 };
