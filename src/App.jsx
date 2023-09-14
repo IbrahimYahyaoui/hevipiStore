@@ -4,6 +4,7 @@ import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
+  useLocation,
 } from "react-router-dom";
 
 import RootLayouts from "./Layouts/RootLayouts";
@@ -16,6 +17,7 @@ import { Toaster } from "react-hot-toast";
 import Checkout from "./pages/Checkout";
 
 import { Analytics } from "@vercel/analytics/react";
+import mixpanel from "mixpanel-browser";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayouts />}>
@@ -29,6 +31,12 @@ const router = createBrowserRouter(
   )
 );
 function App() {
+  mixpanel.init(import.meta.env.VITE_ANALYTICS_TOKEN, {
+    debug: true,
+    track_pageview: true,
+    persistence: "localStorage",
+  });
+
   return (
     <>
       <Analytics />
